@@ -1,0 +1,69 @@
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    </head>
+    <body>
+        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+        
+
+
+        <script>
+            var firebaseConfig = {
+	    apiKey: "AIzaSyC3DdEFgtDu1RLpGztdVErwWb53yz38UFc",
+	    authDomain: "sampleproject-46193.firebaseapp.com",
+	    projectId: "sampleproject-46193",
+	    storageBucket: "sampleproject-46193.appspot.com",
+	    messagingSenderId: "487281861795",
+	    appId: "1:487281861795:web:c377285b06557d2e328b16"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+          let arr1=[];
+          let arr2=[];
+          let ct=0; 
+
+      firebase.database().ref('Scores').on("value",function(snapshot){
+          var data=snapshot.val();
+          
+          for(let i in data){
+              let arr=Object.values(data[i]);
+              
+              arr1[ct]=arr[0];
+              arr2[ct]=arr[1];
+              console.log(arr2[ct]);
+            //   arr2[ct]=arr[1];
+              ct=ct+1;
+              
+          }
+          
+      });
+      var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: arr1,
+        datasets: [{
+            label: 'score',
+            data: arr2,
+            borderWidth: 1,
+            borderColor:'red'
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            lineWidth: 1,
+            y: {
+                beginAtZero : true
+            }
+        }
+    }
+});
+
+        </script>
+    </body>
+</html>

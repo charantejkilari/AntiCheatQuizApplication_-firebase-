@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+</head>
+<body>
+<input type="text" placeholder="Q.no" id="qno"><br>
+<input type="text" placeholder="Question" id="question"><br>
+<input type="text" placeholder="option 1" id="option 1"><br>
+<input type="text" placeholder="option 2" id="option 2"><br>
+<input type="text" placeholder="option 3" id="option 3"><br>
+<input type="text" placeholder="option 4" id="option 4"><br>
+<input type="text" placeholder="correct choice" id="cchoice"><br>
+<button id="btn" onclick="Insertq()">insert</button>
+<button id="btn" onclick="Deleteq()">Delete</button>
+<button id="btn" onclick="Updateq()">Update</button>
+<button id="btn" onclick="Displayq()">Display</button>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+	  var firebaseConfig = {
+	    apiKey: "AIzaSyC3DdEFgtDu1RLpGztdVErwWb53yz38UFc",
+	    authDomain: "sampleproject-46193.firebaseapp.com",
+	    projectId: "sampleproject-46193",
+	    storageBucket: "sampleproject-46193.appspot.com",
+	    messagingSenderId: "487281861795",
+	    appId: "1:487281861795:web:c377285b06557d2e328b16"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+	  var qno=document.getElementById('qno').value;
+	  function Ready(){
+	  			let nname= document.getElementById('txt').value;
+	  			let nrollno= document.getElementById('rollno').value;
+	  			let marks=document.getElementById('marks').value;
+	  			let ngrade=document.getElementById('grade').value;
+	  		
+	  }
+	  function Insertq(){
+	  			let qno= document.getElementById('qno').value;
+	  			let question= document.getElementById('question').value;
+	  			let op1=document.getElementById('option 1').value;
+	  			let op2=document.getElementById('option 2').value;
+	  			let op3=document.getElementById('option 3').value;
+	  			let op4=document.getElementById('option 4').value;
+	  			let cchoice=document.getElementById('cchoice').value;
+	  	firebase.database().ref('Questions/'+Number(qno)).set({
+	  			Question: question
+	  		
+	  	});
+	  	firebase.database().ref('Options/'+Number(qno)).set({
+	  			c1: op1,
+	  			c2:op2,
+	  			c3:op3,
+	  			c4:op4
+	  		
+	  	});
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).set({
+	  			correctChoice:cchoice
+	  		
+	  	});
+
+	  }
+	  function Deleteq(){
+	  	let qno= document.getElementById('qno').value;
+	  	firebase.database().ref('Questions/'+Number(qno)).remove();
+	  	firebase.database().ref('Options/'+Number(qno)).remove();
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).remove();
+	  }
+	  function Displayq(){
+	  	let qno= document.getElementById('qno').value;
+	  	firebase.database().ref('Questions/'+qno).on('value',function(snapshot){
+	  		document.getElementById('question').value=snapshot.val().Question;
+	  	});
+	  	firebase.database().ref('Options/'+Number(qno)).on('value',function(snapshot){
+	  		document.getElementById('option 1').value=snapshot.val().c1;
+	  		document.getElementById('option 2').value=snapshot.val().c2;
+	  		document.getElementById('option 3').value=snapshot.val().c3;
+	  		document.getElementById('option 4').value=snapshot.val().c4;
+	  	});
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).on('value',function(snapshot){
+	  		document.getElementById('cchoice').value=snapshot.val().correctChoice;
+	  	});
+	  }
+	  function Updateq(){
+	  			let qno= document.getElementById('qno').value;
+	  			let question= document.getElementById('question').value;
+	  			let op1=document.getElementById('option 1').value;
+	  			let op2=document.getElementById('option 2').value;
+	  			let op3=document.getElementById('option 3').value;
+	  			let op4=document.getElementById('option 4').value;
+	  			let cchoice=document.getElementById('cchoice').value;
+	  	firebase.database().ref('Questions/'+Number(qno)).update({
+	  			Question: question
+	  		
+	  	});
+	  	firebase.database().ref('Options/'+Number(qno)).update({
+	  			c1: op1,
+	  			c2:op2,
+	  			c3:op3,
+	  			c4:op4
+	  		
+	  	});
+	  	firebase.database().ref('corrrectChoices/'+Number(qno)).update({
+	  			correctChoice:cchoice
+	  		
+	  	});
+	  }
+</script>
+</body>
+</html>

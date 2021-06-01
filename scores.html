@@ -1,0 +1,63 @@
+<html>
+    <head>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-firestore.js"></script>
+</head>
+
+    <body>
+        <textarea id="ta" readonly='true'></textarea>
+        <!-- <input type="textbox" id=1 readonly="true"><br>-------------These comments are another way to represent scores
+        <input type="textbox" id=2 readonly="true"><br>
+        <input type="textbox" id=3 readonly="true"><br>
+        <input type="textbox" id=4 readonly="true"><br>
+        <input type="textbox" id=5 readonly="true"><br>
+        <input type="textbox" id=6 readonly="true"><br>
+        <input type="textbox" id=7 readonly="true"><br>
+        <input type="textbox" id=8 readonly="true"><br> -->
+    
+
+
+
+        <script>
+            var firebaseConfig = {
+	    apiKey: "AIzaSyC3DdEFgtDu1RLpGztdVErwWb53yz38UFc",
+	    authDomain: "sampleproject-46193.firebaseapp.com",
+	    projectId: "sampleproject-46193",
+	    storageBucket: "sampleproject-46193.appspot.com",
+	    messagingSenderId: "487281861795",
+	    appId: "1:487281861795:web:c377285b06557d2e328b16"
+	  };
+	  // Initialize Firebase
+	  firebase.initializeApp(firebaseConfig);
+      firebase.database().ref('Scores').on("value",function(snapshot){
+          var data=snapshot.val();
+        //   document.getElementById(1).style.display='none';
+        //   document.getElementById(2).style.display='none';
+        //   document.getElementById(3).style.display='none';
+        //   document.getElementById(4).style.display='none';
+        //   document.getElementById(5).style.display='none';
+        //   document.getElementById(6).style.display='none';
+        //   document.getElementById(7).style.display='none';
+        //   document.getElementById(8).style.display='none';
+        //   let ct=1;
+          let allscores="";
+          for(let i in data){
+            
+              
+            //   console.log(Object.values(data[i]));
+            //   document.getElementById(ct).style.display='';
+              let arr=Object.values(data[i]);
+              allscores+=arr[0]+" : "+arr[1]+"\n";
+            //   document.getElementById(ct).value=arr[0]+" : "+arr[1];
+              document.getElementById('ta').value=allscores;
+            //   ct=ct+1;
+              
+          }
+          
+      });
+
+        </script>
+    </body>
+</html>
